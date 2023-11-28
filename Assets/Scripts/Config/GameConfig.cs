@@ -4,7 +4,7 @@
     {
         #region LevelConfig
 
-        public static int LEVEL_LENGTH = 6;
+        public static int LEVEL_LENGTH = 1; //6
         public static int U_CORNER_PROBABILITY = 5;
         public static float CAR_PASS_TRESHOLD = 10f;
         public static float U_CORNER_INTERACTIBLE = 27f;
