@@ -6,6 +6,8 @@ namespace Game.CarSystem.Controllers
 {
     public class CarMovementController : MonoBehaviour
     {
+        ObjectPooler objectPooler;
+
         private CarSlingController _carSlingController;
         private CarDirectionController _carDirectionController;
         private CarCornerDetector _carCornerDetector;
@@ -18,6 +20,8 @@ namespace Game.CarSystem.Controllers
         
         public void Initialize(CarSlingController carSlingController)
         {
+            objectPooler = ObjectPooler.instance;
+
             IsActive = false;
 
             _carSlingController = carSlingController;
@@ -66,6 +70,14 @@ namespace Game.CarSystem.Controllers
             {
                 if (_carSlingController.OnDrifting(transform))
                 {
+                    if(!_driftEffect.emitting)
+                    {
+                        Passenger passenger = objectPooler.SpawnFromPool("Passenger", transform, new Vector3(0f, 1.5f, 0f)).GetComponent<Passenger>();
+                        passenger.transform.SetParent(null);
+                        passenger.KinematicBody(false); //turn on ragdoll
+                        passenger.ApplyRagdollEffect(_carSlingController.TargetSling.GetDirection());
+                    }
+
                     _movingActive = false;
                     _driftEffect.emitting = true;
                 }

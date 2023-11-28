@@ -51,6 +51,8 @@ namespace Game.LevelSystem.Controllers
         
         private void GenerateLevels(int levelCount)
         {
+            Random.InitState(123);
+
             var highwayDirections = new  List<HighwayDirection>
             {
                 HighwayDirection.UP,

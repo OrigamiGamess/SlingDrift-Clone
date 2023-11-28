@@ -22,12 +22,12 @@ namespace Game.SlingSystem.Base
         public void AddLine(Transform carBase)
         {
             transform.LookAt(carBase);
-            _sling.transform.ChangeScaleY(Vector3.Distance(_sling.position,carBase.transform.position) / 4f);
+            _sling.transform.ChangeScaleY(Vector3.Distance(_sling.position,carBase.transform.position) / 2f);
         }
 
         public void ResetLine()
         {
-            _sling.transform.ChangeScaleY(1f);
+            _sling.transform.ChangeScaleY(0f);
         }
 
         public Vector3 GetFirstPosition()

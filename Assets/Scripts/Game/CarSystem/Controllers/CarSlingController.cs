@@ -12,6 +12,7 @@ namespace Game.CarSystem.Controllers
         private CarDirectionController _carDirectionController;
         private SlingManager _slingManager;
         private SlingTowerBase _targetSling;
+        public SlingTowerBase TargetSling { get { return _targetSling; } }
         private PlayerView _playerView;
         
         private int _targetSlingIndex;
@@ -28,14 +29,15 @@ namespace Game.CarSystem.Controllers
             {
                 _targetSling = null;
                 _targetSlingIndex = 0;
-            });
-            
-            
+            });    
         }
 
         public bool CheckAvailableSling()
         {
             _targetSling = _slingManager.GetSlingByID(_targetSlingIndex);
+            if(_targetSling != null)
+                MyUtils.Log($"D: {_targetSling.name}");
+
             return _targetSling != null;
         }
 
@@ -43,9 +45,10 @@ namespace Game.CarSystem.Controllers
         {
             if (_targetSling.IsCloseTo(carBase))
             {
+                //float dist = Vector3.Distance(carBase.position, _targetSling.transform.position);
                 carBase.RotateAround(_targetSling.transform.position,_targetSling.transform.up * _targetSling.GetDirection(), 
                     Time.deltaTime * GameConfig.CAR_ROTATING);
-                carBase.Rotate(0,_targetSling.GetDirection() * GameConfig.CAR_ROTATING * Time.deltaTime/4,0);
+                carBase.Rotate(0,_targetSling.GetDirection() * GameConfig.CAR_ROTATING * Time.deltaTime/6,0);
                 _targetSling.AddLine(carBase);
 
                 return true;
